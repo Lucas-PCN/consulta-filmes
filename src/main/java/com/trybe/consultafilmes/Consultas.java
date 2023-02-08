@@ -76,6 +76,15 @@ public class Consultas {
    * conjunto de filmes que se encaixam na categoria da chave correspondente.</p>
    */
   public Map<String, Set<Filme>> filmesLancadosNoAnoAgrupadosPorCategoria(int ano) {
-    return emptyMap(); // TODO: Implementar (bônus).
+    Set<Filme> filmesPorAno = filmes.stream()
+        .filter(filme -> filme.anoDeLancamento == ano)
+        .collect(Collectors.toSet());
+
+    return filmesPorAno.stream()
+        .flatMap(filme -> filme.categorias.stream())
+        .distinct()
+        .collect(Collectors.toMap(categoria -> categoria, categoria -> filmesPorAno.stream()
+            .filter(filme -> filme.categorias.contains(categoria))
+            .collect(Collectors.toSet())));
   }
 }
