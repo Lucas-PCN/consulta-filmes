@@ -62,7 +62,8 @@ public class Consultas {
    */
   public List<Filme> filmesEmQuePeloMenosUmDiretorAtuouMaisRecentesPrimeiro() {
     return filmes.stream()
-        .filter(filmes -> filmes.diretores.stream().anyMatch(diretores -> filmes.atores.contains(diretores)))
+        .filter(
+            filmes -> filmes.diretores.stream().anyMatch(diretor -> filmes.atores.contains(diretor)))
         .distinct()
         .sorted((filmeA, filmeB) -> filmeB.anoDeLancamento - filmeA.anoDeLancamento)
         .collect(Collectors.toList());
