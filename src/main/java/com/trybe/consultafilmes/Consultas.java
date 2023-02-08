@@ -28,7 +28,7 @@ public class Consultas {
    */
   public Set<String> atoresQueInterpretaramSiProprios() {
     return filmes.stream()
-        .flatMap(filmes -> filmes.atoresPorPersonagem.entrySet().stream())
+        .flatMap(filme -> filme.atoresPorPersonagem.entrySet().stream())
         .filter(pair -> pair.getValue().contains(pair.getKey()))
         .map(pair -> pair.getKey())
         .collect(Collectors.toSet());
@@ -45,8 +45,8 @@ public class Consultas {
    */
   public List<String> atoresQueAtuaramEmFilmesDoDiretorEmOrdemAlfabetica(String diretor) {
     return filmes.stream()
-        .filter(filmes -> filmes.diretores.contains(diretor))
-        .flatMap(filmes -> filmes.atores.stream())
+        .filter(filme -> filme.diretores.contains(diretor))
+        .flatMap(filme -> filme.atores.stream())
         .distinct()
         .sorted()
         .collect(Collectors.toList());
@@ -63,7 +63,7 @@ public class Consultas {
   public List<Filme> filmesEmQuePeloMenosUmDiretorAtuouMaisRecentesPrimeiro() {
     return filmes.stream()
         .filter(
-            filmes -> filmes.diretores.stream().anyMatch(diretor -> filmes.atores.contains(diretor)))
+            filme -> filme.diretores.stream().anyMatch(diretor -> filme.atores.contains(diretor)))
         .distinct()
         .sorted((filmeA, filmeB) -> filmeB.anoDeLancamento - filmeA.anoDeLancamento)
         .collect(Collectors.toList());
